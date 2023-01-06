@@ -6,7 +6,7 @@ import { NoPageFound } from './NoPageFound';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { useAuth } from 'hooks/hooks';
-import {refreshUser} from "../redux/auth/authOperations"
+import { refreshUser } from '../redux/auth/authOperations';
 import { RestrictedRoute } from './RestrictedRoute';
 import { PrivatRoute } from './PrivatRoute';
 
@@ -27,21 +27,42 @@ const AppWrapper = styled.div`
 `;
 
 export const App = () => {
-const dispatch = useDispatch();
-const { isRefreshing } = useAuth();
+  const dispatch = useDispatch();
+  const { isRefreshing } = useAuth();
 
-useEffect(()=>{dispatch(refreshUser())},[dispatch]);
+  useEffect(() => {
+    dispatch(refreshUser());
+  }, [dispatch]);
 
-
-  return isRefreshing ? (<b>Refreshing user... </b>) : (<AppWrapper>
-   <Routes>
-     <Route path="/" element={<Layout />}>
-       <Route index element={<HomePage />} />
-       <Route path="/register" element={  <RestrictedRoute component={RegisterPage} redirectTo="/contacts" /> } />
-       <Route path="/login" element={ <RestrictedRoute component={LoginPage} redirectTo="/contacts" /> } />
-       <Route path="/contacts" element={ <PrivatRoute component={ContactsPage} redirectTo="/login" /> } />
-     </Route>
-     <Route path="*" element={<NoPageFound/>}></Route>
-   </Routes>
- </AppWrapper>)
+  return (
+    <AppWrapper>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<HomePage />} />
+          <Route
+            path="/register"
+            element={
+              <RestrictedRoute
+                component={RegisterPage}
+                redirectTo="/contacts"
+              />
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <RestrictedRoute component={LoginPage} redirectTo="/contacts" />
+            }
+          />
+          <Route
+            path="/contacts"
+            element={
+              <PrivatRoute component={ContactsPage} redirectTo="/login" />
+            }
+          />
+        </Route>
+        <Route path="*" element={<NoPageFound />}></Route>
+      </Routes>
+    </AppWrapper>
+  );
 };
