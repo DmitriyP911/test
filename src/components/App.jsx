@@ -5,7 +5,6 @@ import { lazy } from 'react';
 import { NoPageFound } from './NoPageFound';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import { useAuth } from 'hooks/hooks';
 import { refreshUser } from '../redux/auth/authOperations';
 import { RestrictedRoute } from './RestrictedRoute';
 import { PrivatRoute } from './PrivatRoute';
@@ -28,7 +27,6 @@ const AppWrapper = styled.div`
 
 export const App = () => {
   const dispatch = useDispatch();
-  const { isRefreshing } = useAuth();
 
   useEffect(() => {
     dispatch(refreshUser());
